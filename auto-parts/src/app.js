@@ -1,21 +1,33 @@
-import { showHome } from './home.js';
-import { showCatalog } from './catalog.js';
-import { showLogin } from './login.js';
-import { showDetails } from './details.js';
+import { showHome } from "./home.js";
+import { showCatalog } from "./catalog.js";
+import { showLogin } from "./login.js";
+import { showDetails } from "./details.js";
 
+const views = {
+  "home-link": showHome,
+  "catalog-link": showCatalog,
+  "login-link": showLogin,
+};
 
-document.getElementById('home-link').addEventListener('click', showHome);
-document.getElementById('catalog-link').addEventListener('click', showCatalog);
-document.getElementById('login-link').addEventListener('click', showLogin);
-document.getElementById('table').addEventListener('click', (event) => {
-    if (event.target.tagName == 'A') {
-        const id = event.target.dataset.id;
-        showDetails(id);
+document.querySelector("nav").addEventListener("click", (event) => {
+  if (event.target.tagName == "A") {
+    const id = event.target.id;
+    const view = views[id];
+    if (typeof view == "function") {
+      view();
     }
+  }
+});
+
+document.getElementById("table").addEventListener("click", (event) => {
+  if (event.target.tagName == "A") {
+    const id = event.target.dataset.id;
+    showDetails(id);
+  }
 });
 
 // Remove views from page
-document.getElementById('views').remove();
+document.getElementById("views").remove();
 
 // Start application in home view
 // showHome();
